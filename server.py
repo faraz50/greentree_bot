@@ -395,5 +395,13 @@ def get_global_stats():
         "total_transactions": total_transactions
     }), 200
 
+# اجرای خودکار create_db.py فقط اگر دیتابیس وجود نداشت
+if not os.path.exists("airdrop_bot.db"):
+    try:
+        import create_db
+        print("✅ Database created automatically on startup.")
+    except Exception as e:
+        print(f"❌ Error creating database on startup: {e}")
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
