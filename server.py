@@ -410,10 +410,12 @@ def telegram_webhook():
     if request.headers.get("content-type") == "application/json":
         json_str = request.get_data().decode("utf-8")
         update = telebot.types.Update.de_json(json_str)
+        print("📩 Webhook received data:", update)
         bot.process_new_updates([update])
         return jsonify({"status": "ok"}), 200
     else:
         return jsonify({"error": "Invalid content type"}), 403
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host="0.0.0.0", port=port)
