@@ -402,6 +402,18 @@ if not os.path.exists("airdrop_bot.db"):
         print("✅ Database created automatically on startup.")
     except Exception as e:
         print(f"❌ Error creating database on startup: {e}")
+import telebot
+from bot import bot  # استفاده از همون bot.py که ساختی
+
+@app.route("/webhook", methods=["POST"])
+def telegram_webhook():
+    if request.headers.get("content-type") == "application/json":
+        json_str = request.get_data().decode("utf-8")
+        update = telebot.types.Update.de_json(json_str)
+        bot.process_new_updates([update])
+        return jsonify({"status": "ok"}), 200
+    else:
+        return jsonify({"error": "Invalid content type"}), 403
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
