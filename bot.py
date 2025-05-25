@@ -91,5 +91,5 @@ def send_webapp_link(user_id, tokens):
 
     bot.send_message(user_id, f"🌟 Your total tokens: `{tokens}`\nClick below to open the GreenTree Website!", reply_markup=keyboard)
 
-print("✅ Telegram bot is running...")
-bot.polling(none_stop=True, timeout=60, interval=0)
+print("✅ Telegram bot is running via Webhook...")
+
